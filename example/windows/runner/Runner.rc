@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "hello_example" "\0"
+            VALUE "CompanyName", "com.otrofy.com" "\0"
+            VALUE "FileDescription", "image_handler_example" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "hello_example" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2023 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "hello_example.exe" "\0"
-            VALUE "ProductName", "hello_example" "\0"
+            VALUE "InternalName", "image_handler_example" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2023 com.otrofy.com. All rights reserved." "\0"
+            VALUE "OriginalFilename", "image_handler_example.exe" "\0"
+            VALUE "ProductName", "image_handler_example" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

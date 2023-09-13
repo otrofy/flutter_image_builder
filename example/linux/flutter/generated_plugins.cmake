@@ -3,7 +3,7 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-  hello
+  image_handler
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST

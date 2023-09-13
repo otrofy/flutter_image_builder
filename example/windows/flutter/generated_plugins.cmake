@@ -3,7 +3,7 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-  hello
+  image_handler
   permission_handler_windows
 )
 

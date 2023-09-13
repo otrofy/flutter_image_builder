@@ -5,10 +5,10 @@
 import FlutterMacOS
 import Foundation
 
-import hello
+import image_handler
 import path_provider_foundation
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
-  HelloPlugin.register(with: registry.registrar(forPlugin: "HelloPlugin"))
+  ImageHandlerPlugin.register(with: registry.registrar(forPlugin: "ImageHandlerPlugin"))
   PathProviderPlugin.register(with: registry.registrar(forPlugin: "PathProviderPlugin"))
 }

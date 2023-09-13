@@ -1,4 +1,4 @@
-group 'com.example.hello'
+group 'com.otrofy.com.image_handler'
 version '1.0-SNAPSHOT'
 
 buildscript {
@@ -26,7 +26,7 @@ apply plugin: 'kotlin-android'
 
 android {
     if (project.android.hasProperty("namespace")) {
-        namespace 'com.example.hello'
+        namespace 'com.otrofy.com.image_handler'
     }
 
     compileSdkVersion 33

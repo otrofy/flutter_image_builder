@@ -1,6 +1,6 @@
-# hello_example
+# image_handler_example
 
-Demonstrates how to use the hello plugin.
+Demonstrates how to use the image_handler plugin.
 
 ## Getting Started
 
