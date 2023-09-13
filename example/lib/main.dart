@@ -53,6 +53,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    var image;
+    bool hayImagen = false;
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -63,7 +65,30 @@ class _MyAppState extends State<MyApp> {
                 finalFormat: 'webp', quality: 20),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return Image.file(File(snapshot.data!.path));
+                return Column(
+                  children: [
+                    Image.file(File(snapshot.data!.path)),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 32.0),
+                      child: FloatingActionButton(
+                        onPressed: () {
+                          setState(() {
+                            image = ImageHandler.cropImage(
+                                pickedFile: File(snapshot.data!.path),
+                                context: context,
+                                quality: 50,
+                                title: 'Image Cropper');
+                            hayImagen = true;
+                          });
+                        },
+                        backgroundColor: const Color(0xFFBC764A),
+                        tooltip: 'Crop',
+                        child: const Icon(Icons.crop),
+                      ),
+                    ),
+                    hayImagen ? Image.file(File(image!.path)) : SizedBox()
+                  ],
+                );
               } else {
                 return const Text('No data');
               }

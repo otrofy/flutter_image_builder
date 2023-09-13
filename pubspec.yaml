@@ -14,6 +14,8 @@ dependencies:
   path_provider: ^2.1.1
   permission_handler: ^11.0.0
   plugin_platform_interface: ^2.0.2
+  image_cropper: ^5.0.0
+  image_picker: ^1.0.4
 
 dev_dependencies:
   flutter_lints: ^2.0.0

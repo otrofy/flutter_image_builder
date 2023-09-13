@@ -1,8 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'image_handler_platform_interface.dart';
@@ -96,4 +98,55 @@ class ImageHandler {
 
     return XFile(result!.path);
   }
+
+  static Future<CroppedFile> cropImage(
+      {required var pickedFile,
+      var context,
+      required String title,
+      required int quality}) async {
+    final croppedFile = await ImageCropper().cropImage(
+      sourcePath: pickedFile!.path,
+      compressFormat: ImageCompressFormat.jpg,
+      compressQuality: quality,
+      uiSettings: [
+        AndroidUiSettings(
+            toolbarTitle: title,
+            toolbarColor: Colors.deepOrange,
+            toolbarWidgetColor: Colors.white,
+            initAspectRatio: CropAspectRatioPreset.original,
+            lockAspectRatio: false),
+        IOSUiSettings(
+          title: title,
+        ),
+        WebUiSettings(
+          context: context,
+          presentStyle: CropperPresentStyle.dialog,
+          boundary: const CroppieBoundary(
+            width: 520,
+            height: 520,
+          ),
+          viewPort:
+              const CroppieViewPort(width: 480, height: 480, type: 'circle'),
+          enableExif: true,
+          enableZoom: true,
+          showZoomer: true,
+        ),
+      ],
+    );
+    return croppedFile!;
+  }
+
+  // static Future<void> getLostData() async {
+  //   final ImagePicker picker = ImagePicker();
+  //   final LostDataResponse response = await picker.retrieveLostData();
+  //   if (response.isEmpty) {
+  //     return;
+  //   }
+  //   final List<XFile>? files = response.files;
+  //   if (files != null) {
+  //     _handleLostFiles(files);
+  //   } else {
+  //     _handleError(response.exception);
+  //   }
+  // }
 }
