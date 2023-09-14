@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -151,23 +152,24 @@ class ImageHandler {
       debugPrint("Error al seleccionar archivo: $e");
     }
   }
-  // static Future selectFile() async {
-  //   try {
-  //     FilePickerResult? image =
-  //         await FilePicker.platform.pickFiles(type: FileType.image);
-  //     if (image != null) {
-  //       final imageTemporary = XFile(image.files.single.path!);
-  //       final value = await convertFileToOtherFormat(file: imageTemporary);
-  //       // setState(() {
-  //       //   this.image = value;
-  //       // });
-  //     } else {
-  //       return;
-  //     }
-  //   } on PlatformException catch (e) {
-  //     if (kDebugMode) {
-  //       debugPrint("Error al seleccionar archivo: $e");
-  //     }
-  //   }
-  // }
+
+  static Future selectFile() async {
+    try {
+      FilePickerResult? image =
+          await FilePicker.platform.pickFiles(type: FileType.image);
+      if (image != null) {
+        final imageTemporary = XFile(image.files.single.path!);
+        final value = await convertFileToOtherFormat(file: imageTemporary);
+        // setState(() {
+        //   this.image = value;
+        // });
+      } else {
+        return;
+      }
+    } on PlatformException catch (e) {
+      if (kDebugMode) {
+        debugPrint("Error al seleccionar archivo: $e");
+      }
+    }
+  }
 }
