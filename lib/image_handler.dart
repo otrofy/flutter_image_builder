@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'image_handler_platform_interface.dart';
@@ -136,17 +137,37 @@ class ImageHandler {
     return croppedFile!;
   }
 
-  // static Future<void> getLostData() async {
-  //   final ImagePicker picker = ImagePicker();
-  //   final LostDataResponse response = await picker.retrieveLostData();
-  //   if (response.isEmpty) {
-  //     return;
-  //   }
-  //   final List<XFile>? files = response.files;
-  //   if (files != null) {
-  //     _handleLostFiles(files);
-  //   } else {
-  //     _handleError(response.exception);
+  static Future pickImageCamera(ImageSource camera) async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.camera);
+      if (image == null) return;
+      final imageTemporary = XFile(image.path);
+
+      final value = await convertFileToOtherFormat(file: imageTemporary);
+      // setState(() {
+      //   this.image = value;
+      // });
+    } on PlatformException catch (e) {
+      debugPrint("Error al seleccionar archivo: $e");
+    }
+  }
+  // static Future selectFile() async {
+  //   try {
+  //     FilePickerResult? image =
+  //         await FilePicker.platform.pickFiles(type: FileType.image);
+  //     if (image != null) {
+  //       final imageTemporary = XFile(image.files.single.path!);
+  //       final value = await convertFileToOtherFormat(file: imageTemporary);
+  //       // setState(() {
+  //       //   this.image = value;
+  //       // });
+  //     } else {
+  //       return;
+  //     }
+  //   } on PlatformException catch (e) {
+  //     if (kDebugMode) {
+  //       debugPrint("Error al seleccionar archivo: $e");
+  //     }
   //   }
   // }
 }
