@@ -138,34 +138,27 @@ class ImageHandler {
     return croppedFile!;
   }
 
-  static Future pickImageCamera(ImageSource camera) async {
-    try {
-      final image = await ImagePicker().pickImage(source: ImageSource.camera);
-      if (image == null) return;
-      final imageTemporary = XFile(image.path);
-
-      final value = await convertFileToOtherFormat(file: imageTemporary);
-      // setState(() {
-      //   this.image = value;
-      // });
-    } on PlatformException catch (e) {
-      debugPrint("Error al seleccionar archivo: $e");
-    }
-  }
-
-  static Future selectFile() async {
+  static Future selectFile({required FileType type}) async {
     try {
       FilePickerResult? image =
           await FilePicker.platform.pickFiles(type: FileType.image);
       if (image != null) {
-        final imageTemporary = XFile(image.files.single.path!);
-        final value = await convertFileToOtherFormat(file: imageTemporary);
-        // setState(() {
-        //   this.image = value;
-        // });
+        return image;
       } else {
         return;
       }
+    } on PlatformException catch (e) {
+      if (kDebugMode) {
+        debugPrint("Error al seleccionar archivo: $e");
+      }
+    }
+  }
+
+  static Future pickImageCamera({required ImageSource source}) async {
+    try {
+      final image = await ImagePicker().pickImage(source: source);
+      if (image == null) return;
+      return image;
     } on PlatformException catch (e) {
       if (kDebugMode) {
         debugPrint("Error al seleccionar archivo: $e");

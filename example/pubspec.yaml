@@ -17,6 +17,9 @@ dependencies:
   flutter:
     sdk: flutter
   permission_handler: ^11.0.0
+  image_picker: ^1.0.4
+  file_picker: ^5.5.0
+
 
   image_handler:
     # When depending on this package from a real application you should use:

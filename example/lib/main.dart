@@ -1,11 +1,13 @@
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:image_handler/image_handler.dart';
 import 'package:image_handler_example/permissions.dart';
+import 'package:image_picker/image_picker.dart';
 
 void main() {
   runApp(const MyApp());
@@ -86,7 +88,23 @@ class _MyAppState extends State<MyApp> {
                         child: const Icon(Icons.crop),
                       ),
                     ),
-                    hayImagen ? Image.file(File(image!.path)) : SizedBox()
+                    hayImagen
+                        ? Image.file(File(image!.path))
+                        : const SizedBox(),
+                    FloatingActionButton(
+                      onPressed: () async {
+                        XFile file = await ImageHandler.pickImageCamera(
+                            source: ImageSource.gallery);
+                      },
+                      child: const Icon(Icons.camera),
+                    ),
+                    FloatingActionButton(
+                      onPressed: () async {
+                        XFile file =
+                            await ImageHandler.selectFile(type: FileType.image);
+                      },
+                      child: const Icon(Icons.camera),
+                    )
                   ],
                 );
               } else {
