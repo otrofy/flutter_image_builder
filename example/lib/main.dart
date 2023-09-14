@@ -1,13 +1,10 @@
 import 'dart:io';
-
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
-
 import 'package:flutter/services.dart';
 import 'package:image_handler/image_handler.dart';
 import 'package:image_handler_example/permissions.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:video_player/video_player.dart';
 
 void main() {
   runApp(const MyApp());
@@ -53,65 +50,112 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  XFile? image;
+  dynamic? file;
+  bool hayImagen = false;
+  bool hayImagen1 = false;
+  VideoPlayerController? _videoPlayerController;
+
+  loadVideoPlayer(File file) {
+    if (_videoPlayerController != null) {
+      _videoPlayerController!.dispose();
+    }
+
+    _videoPlayerController = VideoPlayerController.file(file);
+    _videoPlayerController!.initialize().then((value) {
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    var image;
-    bool hayImagen = false;
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-        ),
-        body: FutureBuilder(
-            future: ImageHandler.convertFileToOtherFormat(
-                finalFormat: 'webp', quality: 20),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return Column(
+          appBar: AppBar(
+            title: const Text('Plugin example app'),
+          ),
+          body: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 32.0),
+                child: FloatingActionButton(
+                  onPressed: () async {
+                    // image = await ImageHandler.cropImage(
+                    //     pickedFile: File(file),
+                    //     context: context,
+                    //     quality: 50,
+                    //     title: 'Image Cropper');
+
+                    setState(() {
+                      hayImagen = true;
+                    });
+                  },
+                  backgroundColor: const Color(0xFFBC764A),
+                  tooltip: 'Crop',
+                  child: const Icon(Icons.crop),
+                ),
+              ),
+              hayImagen
+                  ? Container(
+                      height: 50,
+                      width: 100,
+                      child: Image.file(
+                        File(image!.path),
+                        width: 100,
+                        height: 50,
+                      ))
+                  : const SizedBox(),
+              FloatingActionButton(
+                onPressed: () async {
+                  file = await ImageHandler.pickImageCamera();
+                  hayImagen1 = true;
+                  setState(() {});
+                },
+                child: const Icon(Icons.camera),
+              ),
+              FloatingActionButton(
+                onPressed: () async {
+                  file = await ImageHandler.selectFile(type: FileType.video);
+
+                  loadVideoPlayer(file);
+
+                  hayImagen1 = true;
+                  setState(() {});
+                },
+                child: const Icon(Icons.camera),
+              ),
+              // hayImagen1 ? Image.file(File(file!.path)) : SizedBox(),
+              FloatingActionButton(
+                onPressed: () async {},
+                child: const Icon(Icons.camera),
+              ),
+              Center(
+                child: Stack(
                   children: [
-                    Image.file(File(snapshot.data!.path)),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 32.0),
-                      child: FloatingActionButton(
-                        onPressed: () {
-                          setState(() {
-                            image = ImageHandler.cropImage(
-                                pickedFile: File(snapshot.data!.path),
-                                context: context,
-                                quality: 50,
-                                title: 'Image Cropper');
-                            hayImagen = true;
-                          });
-                        },
-                        backgroundColor: const Color(0xFFBC764A),
-                        tooltip: 'Crop',
-                        child: const Icon(Icons.crop),
+                    if (_videoPlayerController != null) ...[
+                      Container(
+                        height: 350,
+                        width: 350,
+                        child: AspectRatio(
+                          aspectRatio:
+                              _videoPlayerController!.value.aspectRatio,
+                          child: VideoPlayer(_videoPlayerController!),
+                        ),
                       ),
-                    ),
-                    hayImagen
-                        ? Image.file(File(image!.path))
-                        : const SizedBox(),
-                    FloatingActionButton(
-                      onPressed: () async {
-                        XFile file = await ImageHandler.pickImageCamera(
-                            source: ImageSource.gallery);
-                      },
-                      child: const Icon(Icons.camera),
-                    ),
-                    FloatingActionButton(
-                      onPressed: () async {
-                        XFile file =
-                            await ImageHandler.selectFile(type: FileType.image);
-                      },
-                      child: const Icon(Icons.camera),
-                    )
+                    ]
                   ],
-                );
-              } else {
-                return const Text('No data');
-              }
-            }),
-      ),
+                ),
+              ),
+              FloatingActionButton(
+                onPressed: () {
+                  setState(() {
+                    _videoPlayerController!.play();
+                  });
+                },
+                child: Icon(Icons.pause),
+              ),
+            ],
+          )),
     );
   }
 }

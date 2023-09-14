@@ -1,7 +1,8 @@
 name: image_handler
-description: A new Flutter plugin project.
+description: a flutter plugin to handle images, crop them, compress them and even pick them
 version: 0.0.1
-homepage: null
+author:
+homepage: 
 
 environment:
   sdk: '>=3.1.1 <4.0.0'
@@ -12,7 +13,6 @@ dependencies:
     sdk: flutter
   flutter_image_compress: ^2.0.4
   path_provider: ^2.1.1
-  permission_handler: ^11.0.0
   plugin_platform_interface: ^2.0.2
   image_cropper: ^5.0.0
   file_picker: ^5.5.0
@@ -21,6 +21,7 @@ dependencies:
 
 dev_dependencies:
   flutter_lints: ^2.0.0
+  permission_handler: ^11.0.0
   flutter_test:
     sdk: flutter
 
