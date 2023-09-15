@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -7,20 +6,27 @@ import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
-
 import 'image_handler_platform_interface.dart';
-export 'package:flutter_image_compress/flutter_image_compress.dart'; // Exporta la biblioteca aquí
-export 'package:image_cropper/image_cropper.dart'; // Exporta la biblioteca aquí
+export 'package:flutter_image_compress/flutter_image_compress.dart';
+export 'package:image_cropper/image_cropper.dart';
 export 'package:image_picker/image_picker.dart';
 export 'package:file_picker/file_picker.dart';
 
+/// A class that provides utilities for handling images in a Flutter application.
+
 class ImageHandler {
+  /// Gets the current platform version.
+  ///
+  /// Returns a `String` with the current platform version or `null` if it couldn't be retrieved.
+
   Future<String?> getPlatformVersion() {
     return ImageHandlerPlatform.instance.getPlatformVersion();
   }
 
-  /// This function check the image size this receive a [XFile] as an input and return the size of the file as an [int]
+  /// Checks the size of a compressed file.
+  ///
+  /// Receives an [XFile] as input and returns the size of the file as an [int] in bytes.
+  /// If the file is null, it returns 0.
   static Future<int> checkCompressedFileSize(XFile? file) async {
     if (file == null) {
       return 0;
@@ -37,12 +43,15 @@ class ImageHandler {
     return 0;
   }
 
-  /// This function convert an asset file receiving a [String] of the path and returning a [XFile] except the format file [jpg]
+  /// Converts a file to another format.
+  ///
+  /// Receives an [XFile] as input, a final format (default is 'jpeg'), and a quality.
+  /// Returns an [XFile] with the converted file or `null` if an error occurs.
   static Future<XFile?> convertFileToOtherFormat(
       {required XFile? file,
       String finalFormat = 'jpeg',
       required int quality}) async {
-    //checkCompressedFileSize(file);
+    // ... (check and get the size of the file)
     final filePath = file!.path;
     final validExtensions = [
       '.jpg',
@@ -65,7 +74,6 @@ class ImageHandler {
     final lastIndex = filePath.lastIndexOf('.');
     final splitted = filePath.substring(0, lastIndex);
     final outPath = '${splitted}_out.$finalFormat';
-
     // Compress and get the result as a File
     var result = await FlutterImageCompress.compressAndGetFile(
       file.path,
@@ -80,6 +88,11 @@ class ImageHandler {
 
     return XFile(result!.path);
   }
+
+  /// Crops an image.
+  ///
+  /// Receives an image file, the application context, a title, and a quality.
+  /// Returns an [XFile] with the cropped image or `null` if the operation is canceled.
 
   static Future<XFile> cropImage(
       {required var pickedFile,
@@ -119,6 +132,12 @@ class ImageHandler {
     return file;
   }
 
+  /// Crops an image.
+  ///
+  /// Receives an image file, the application context, a title, and a quality.
+  /// Returns an [XFile] with the cropped image or `null` if the operation is canceled.
+  /// Returns an [File] if the user select as a input parameter [FileType.video]
+
   static Future selectFile({required FileType type}) async {
     try {
       FilePickerResult? image = await FilePicker.platform.pickFiles(type: type);
@@ -144,6 +163,10 @@ class ImageHandler {
       }
     }
   }
+
+  /// Picks an image from the camera.
+  ///
+  /// Returns an [XFile] with the picked image or `null` if an error occurs.
 
   static Future pickImageCamera() async {
     try {

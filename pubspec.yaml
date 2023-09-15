@@ -1,8 +1,8 @@
 name: image_handler
-description: a flutter plugin to handle images, crop them, compress them and even pick them
+description: A versatile Flutter plugin for effortless image management. Crop, compress, and select images or videos with ease.
 version: 0.0.1
-author:
-homepage: 
+author: Otrofy Inc.
+homepage:  https://otrofy.com
 
 environment:
   sdk: '>=3.1.1 <4.0.0'
@@ -12,7 +12,6 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_image_compress: ^2.0.4
-  path_provider: ^2.1.1
   plugin_platform_interface: ^2.0.2
   image_cropper: ^5.0.0
   file_picker: ^5.5.0
