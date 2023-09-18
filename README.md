@@ -86,7 +86,3 @@ This Flutter plugin is open-source and licensed under the MIT License. You can f
 ## Issues and Contributions
 
 If you encounter any issues or have suggestions for improvements, please open an issue on the GitHub repository. Contributions and pull requests are welcome!
-
----
-
-**Note**: Replace `your-repo-link` with the actual GitHub repository link for the Flutter Image Handler plugin.
