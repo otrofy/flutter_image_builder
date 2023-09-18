@@ -94,7 +94,11 @@ class ImageHandler {
       {required var pickedFile,
       var context,
       required String title,
-      required int quality}) async {
+      required int quality,
+      int widthCroppieBoundary = 520,
+      int heightCroppieBoundary = 520,
+      int widthCroppieViewPort = 480,
+      int heightCroppieViewPort = 480}) async {
     final croppedFile = await ImageCropper().cropImage(
       sourcePath: pickedFile!.path,
       compressFormat: ImageCompressFormat.jpg,
@@ -112,12 +116,14 @@ class ImageHandler {
         WebUiSettings(
           context: context,
           presentStyle: CropperPresentStyle.dialog,
-          boundary: const CroppieBoundary(
-            width: 520,
-            height: 520,
+          boundary: CroppieBoundary(
+            width: widthCroppieBoundary,
+            height: heightCroppieBoundary,
           ),
-          viewPort:
-              const CroppieViewPort(width: 480, height: 480, type: 'circle'),
+          viewPort: CroppieViewPort(
+              width: widthCroppieViewPort,
+              height: heightCroppieViewPort,
+              type: 'circle'),
           enableExif: true,
           enableZoom: true,
           showZoomer: true,
@@ -155,7 +161,7 @@ class ImageHandler {
       }
     } on PlatformException catch (e) {
       if (kDebugMode) {
-        debugPrint("Error al seleccionar archivo: $e");
+        debugPrint("There was an error picking the file: $e");
       }
     }
   }
@@ -171,7 +177,7 @@ class ImageHandler {
       return image;
     } on PlatformException catch (e) {
       if (kDebugMode) {
-        debugPrint("Error al seleccionar archivo: $e");
+        debugPrint("There was an error picking the file: $e");
       }
     }
   }
