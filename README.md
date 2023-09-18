@@ -4,27 +4,23 @@ The Flutter Image Handler plugin provides utilities for handling images in a Flu
 
 ## Features
 
-### 1. Get Platform Version
-
-- `Future<String?> getPlatformVersion()`: Retrieves the current platform version or returns `null` if it couldn't be retrieved.
-
-### 2. Check Compressed File Size
+### 1. Check Compressed File Size
 
 - `static Future<int> checkCompressedFileSize(XFile? file)`: Checks the size of a compressed file specified by an `XFile` and returns the size in bytes. Returns 0 if the file is null.
 
-### 3. Convert File to Other Format
+### 2. Convert File to Other Format
 
 - `static Future<XFile?> convertFileToOtherFormat({required XFile? file, String finalFormat = 'jpeg', required int quality})`: Converts a file to another format with the specified quality. Supported formats include JPEG, PNG, GIF, BMP, WebP, HEIC, and HEIF.
 
-### 4. Crop Image
+### 3. Crop Image
 
 - `static Future<XFile> cropImage({required var pickedFile, var context, required String title, required int quality, int widthCroppieBoundary = 520, int heightCroppieBoundary = 520, int widthCroppieViewPort = 480, int heightCroppieViewPort = 480})`: Crops an image with customizable settings such as title, quality, and crop boundaries. Supports Android, iOS, and web platforms.
 
-### 5. Select File
+### 4. Select File
 
 - `static Future selectFile({required FileType type})`: Allows users to select files or videos from their device. Returns an `XFile` for image files and a `File` for video files.
 
-### 6. Pick Image from Camera
+### 5. Pick Image from Camera
 
 - `static Future pickImageCamera()`: Captures an image from the device's camera and returns an `XFile` with the picked image.
 
@@ -47,8 +43,6 @@ Here's how you can use the Flutter Image Handler plugin in your Flutter applicat
 ## Example
 
 ```dart
-
-
 // Check the size of a compressed file
 int fileSize = await ImageHandler.checkCompressedFileSize(someXFile);
 print('Compressed file size: $fileSize bytes');
