@@ -12,17 +12,23 @@ class MockImageHandlerPlatform
 }
 
 void main() {
+  // Store the original platform instance to restore after tests
   final ImageHandlerPlatform initialPlatform = ImageHandlerPlatform.instance;
-
-  test('$MethodChannelImageHandler is the default instance', () {
-    expect(initialPlatform, isInstanceOf<MethodChannelImageHandler>());
+  setUp(() {
+    // Reset to the initial platform before each test
+    ImageHandlerPlatform.instance = initialPlatform;
   });
-
-  test('getPlatformVersion', () async {
-    ImageHandler imageHandlerPlugin = ImageHandler();
-    MockImageHandlerPlatform fakePlatform = MockImageHandlerPlatform();
-    ImageHandlerPlatform.instance = fakePlatform;
-
-    expect(await imageHandlerPlugin.getPlatformVersion(), '42');
+  group('ImageHandlerPlatform Tests', () {
+    test('$MethodChannelImageHandler is the default instance', () {
+      expect(ImageHandlerPlatform.instance,
+          isInstanceOf<MethodChannelImageHandler>());
+    });
+    test('getPlatformVersion returns mocked value', () async {
+      ImageHandler imageHandlerPlugin = ImageHandler();
+      MockImageHandlerPlatform fakePlatform = MockImageHandlerPlatform();
+      // Set the instance to our fake platform
+      ImageHandlerPlatform.instance = fakePlatform;
+      expect(await imageHandlerPlugin.getPlatformVersion(), '42');
+    });
   });
 }
