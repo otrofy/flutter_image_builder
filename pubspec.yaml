@@ -45,12 +45,6 @@ flutter:
         pluginClass: ImageHandlerPlugin
       ios:
         pluginClass: ImageHandlerPlugin
-      linux:
-        pluginClass: ImageHandlerPlugin
-      macos:
-        pluginClass: ImageHandlerPlugin
-      windows:
-        pluginClass: ImageHandlerPluginCApi
   # To add assets to your plugin package, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
