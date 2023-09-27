@@ -1,7 +1,6 @@
 name: image_handler
 description: A versatile Flutter plugin for effortless image management. Crop, compress, and select images or videos with ease.
 version: 0.0.1
-author: Otrofy Inc.
 homepage:  https://otrofy.com
 
 environment:
